@@ -1,9 +1,13 @@
 package com.didi.rest.webservices.restful_web_services.user;
 
+import org.springframework.stereotype.Component;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
+@Component
 public class UserDaoService {
     private static List<User> users = new ArrayList<>();
     static {
@@ -16,5 +20,14 @@ public class UserDaoService {
     public List<User> findAll()
     {
         return users;
+    }
+
+    public User findUser(int id) {
+        //without Predicat
+        // return users.stream().filter(user -> id == user.getId()).findFirst().orElse(null);
+            Predicate<? super User> predicate = user -> user.getId().equals(id);
+            return users.stream().filter(predicate).findFirst().get();
+
+
     }
 }
