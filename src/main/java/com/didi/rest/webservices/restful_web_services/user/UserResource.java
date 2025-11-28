@@ -1,8 +1,6 @@
 package com.didi.rest.webservices.restful_web_services.user;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,5 +22,11 @@ public class UserResource {
     public User FindUser(@PathVariable int id)
     {
         return userDaoService.findUser(id);
+    }
+
+    @PostMapping("/users")
+    public void AddUser(@RequestBody User user)
+    {
+        userDaoService.saveUser(user);
     }
 }
