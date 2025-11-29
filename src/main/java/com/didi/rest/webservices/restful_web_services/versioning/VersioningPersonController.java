@@ -16,14 +16,14 @@ public class VersioningPersonController {
         return new PersonV2(new Name("Bob","Marley"));
     }
 
-    @GetMapping(path="/person/header", headers= "X-API-VERSION=1")
-    public PersonV1 getFirstVersionOfPersonHeader()
+    @GetMapping(path="/person/accept", produces= "application/vnd.company.app-v1+json")
+    public PersonV1 getFirstVersionOfPersonAcceptHeader()
     {
         return new PersonV1("Bob Marley");
     }
 
-    @GetMapping(path="/person/header", headers= "X-API-VERSION=2")
-    public PersonV2 getSecondVersionOfPersonHeader()
+    @GetMapping(path="/person/accept", produces= "application/vnd.company.app-v2+json")
+    public PersonV2 getSecondVersionOfPersonAcceptHeader()
     {
         return new PersonV2(new Name("Bob","Marley"));
     }
