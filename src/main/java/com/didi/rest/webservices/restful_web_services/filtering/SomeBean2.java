@@ -1,11 +1,6 @@
 package com.didi.rest.webservices.restful_web_services.filtering;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@JsonIgnoreProperties({"field1","field2"})
-// when we have only one field
-//@JsonIgnoreProperties("field1")
 public class SomeBean2 {
     private String field1;
     private String field2;
