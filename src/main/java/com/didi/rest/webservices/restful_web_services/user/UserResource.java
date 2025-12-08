@@ -30,6 +30,13 @@ public class UserResource {
         return ResponseEntity.ok(userRepository.findById(id));
     }
 
+    @GetMapping("/users/{id}/posts")
+    public List<Post> FindUserPosts(@PathVariable int id)
+    {
+        Optional<User> user = userRepository.findById(id);
+        return user.get().getPosts();
+    }
+
     @PostMapping("/users")
     public ResponseEntity<User> AddUser(@Valid @RequestBody User user)
     {
