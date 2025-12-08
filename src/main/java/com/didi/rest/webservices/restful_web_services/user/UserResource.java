@@ -1,5 +1,6 @@
 package com.didi.rest.webservices.restful_web_services.user;
 
+import com.didi.rest.webservices.restful_web_services.user.jpa.PostRepository;
 import com.didi.rest.webservices.restful_web_services.user.jpa.UserRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,11 @@ import java.util.Optional;
 @RestController
 public class UserResource {
     UserRepository userRepository;
+    PostRepository postRepository;
 
-    public UserResource(UserRepository userRepository) {
+    public UserResource(UserRepository userRepository, PostRepository postRepository) {
         this.userRepository = userRepository;
+        this.postRepository = postRepository;
     }
 
     @GetMapping("/users")
@@ -35,6 +38,22 @@ public class UserResource {
     {
         Optional<User> user = userRepository.findById(id);
         return user.get().getPosts();
+    }
+
+    @PostMapping("/users/{id}/posts")
+    public ResponseEntity<Object> AddPost(@PathVariable int id, @Valid @RequestBody Post post)
+    {
+        Optional<User> user = userRepository.findById(id);
+        post.setUser(user.get());
+        Post savedPost = postRepository.save(post);
+
+        URI location= ServletUriComponentsBuilder
+                .fromCurrentRequest().path("/{id}")
+                .buildAndExpand(savedPost.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
+
     }
 
     @PostMapping("/users")
