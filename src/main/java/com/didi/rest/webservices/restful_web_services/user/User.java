@@ -1,15 +1,18 @@
 package com.didi.rest.webservices.restful_web_services.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity(name="user_details")
 public class User {
@@ -21,6 +24,9 @@ public class User {
     private String name;
     @Past (message="The date of birth should be in the past")
     private LocalDate birthDate;
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
+    private List<Post> posts;
 
     protected User(){}
     public User(Integer id, String name, LocalDate birthDate) {
